@@ -1,1 +1,407 @@
-Hello Python.
+-------------------------------------------------------------------------------------------
+filename:  bakery.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 面包店
+from venv1.shop import Shop
+
+
+class Bakery(Shop):
+    __master = None
+    __bread = None
+
+    def get_bread(self) -> str:
+        return self.__bread
+
+    def set_bread(self, bread: str = None):
+        self.__bread = bread
+
+    def __init__(self, bread: str = None):
+        super().__init__()
+        self.__bread = bread
+
+    def bread_num(self):
+        print("{bread_num}。".format(bread_num=self.__bread), end="")
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  box.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 果篮子
+import types
+from typing import Type
+
+from venv1.item import Item
+
+
+class Box(Item):
+    __types = None
+
+    def get_boxtype(self) -> str | None:
+        return self.__type
+
+    def set_boxtype(self, types: str = None):
+        self.__type = types
+
+    def __init__(self, types: str = None):
+        self.__type = types
+
+    def box_type(self):
+        print("分别放进了{box_type}。".format(box_type=self.__type))
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  building.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 建筑
+class Building:
+    __company = None  # 公司
+    __address = None  # 地址
+    __area = None
+
+    def get_area(self) -> int:
+        pass
+
+    def set_area(self, x: int, y: int | None):
+        if x < 0 or y < 0:
+            self.__area = 0
+        else:
+            self.__area = x * y
+
+    def get_company(self) -> str:
+        pass
+
+    def set_company(self, company: str | None):
+        self.__company = company
+
+    def get_address(self) -> str:
+        pass
+
+    def set_address(self, address: str | None):
+        self.__company = address
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  car.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 车
+from venv1.person import Person
+
+
+class Car:
+    __brand = None  # 品牌
+    __driver = None
+    __passengers = []  # 乘客
+    __meeter = None  # 要见的人
+
+    def __init__(self, brand: str = None, driver: Person = None, meeter: Person = None) -> None:
+        self.__brand = brand
+        self.__driver = driver
+        self.__meeter = meeter
+
+    def remove_passenger(self, p: Person):
+        self.__passengers.remove(p)
+
+    def add_passenger(self, p: Person):
+        self.__passengers.append(p)
+
+    def get_driver(self) -> Person:
+        return self.__driver
+
+    def set_driver(self, p: Person):
+        self.__driver = p
+
+    def get_meeter(self) -> Person:
+        return self.__meeter
+
+    def set_meeter(self, m: Person):
+        self.__meeter = m
+
+    def run(self):
+        if self.__driver is not None:
+            print("{driver_name} 驾驶 {brand} 车去找 {meeter}，".format(driver_name=self.__driver.get_name(),
+                                                                       brand=self.__brand,
+                                                                       meeter=self.__meeter.get_name()), end="")
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  fruit_store.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 水果店
+from typing import Callable
+
+from venv1.shop import Shop
+
+
+class FruitStore(Shop):
+    __fruit = None
+
+    def set_name(self, name: str):
+        self.__name = name
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_fruit(self) -> Callable[[str | None], None]:
+        return self.set_fruit
+
+    def set_fruit(self, fruit: str = None):
+        self.__fruit = fruit
+
+    def __init__(self, fruit: str = None, name: str = None) -> None:
+        super().__init__(name)
+        self.__fruit = fruit
+        self.__name = name
+
+    def firut_num(self):
+        print("{fruit_num}和".format(fruit_num=self.__fruit), end="")
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  hospital.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+from venv1.building import Building
+
+
+class Hospital(Building):
+    __master = None
+    __level = None
+    __name = None
+
+    def set_name(self, name: str):
+        self.__name = name
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def __init__(self, name: str) -> None:
+        self.__name = name
+
+    def hospital_name(self):
+        print("{hospital_name}".format(hospital_name=self.__name), end="")
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  item.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 物品
+class Item:
+    __type = None
+    __name = None
+    __price = None
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  main.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+from venv1.bakery import Bakery
+from venv1.box import Box
+from venv1.car import Car
+from venv1.fruit_store import FruitStore
+from venv1.person import Person
+
+
+def application():
+    bob = Person(name="Bob")
+    alice = Person(name="Alice")
+    alice_dad = Person(name="Alice's dad")
+    alice_and_father = Person(name="Alice 和 Alice's dad")
+
+    patient = Person(name="Bob's dad")  # 病人->Bob's dad
+    patient.set_status(status="生病了")
+    patient.set_place(place="佩奇医院")
+    patient.status()  # bob‘s dad is skin,live in hospital
+
+    alice_status = Person(name="Alice")
+    alice_status.set_place(place="老王水果店和老许面包店")
+    alice_status.alice_know()  # alice知道后去了shop
+
+    apple_orange_num = FruitStore()
+    apple_orange_num.set_fruit(fruit="9个苹果和6个橙子")
+    apple_orange_num.firut_num()  # 水果的信息和数量
+
+    bread_nums = Bakery()
+    bread_nums.set_bread(bread="3个热狗")
+    bread_nums.bread_num()  # 面包的信息和数量
+
+    boxstype = Box()
+    boxstype.set_boxtype(types="水果篮子和面包篮子")
+    boxstype.box_type()
+
+    tesla = Car(brand="Tesla")
+    tesla.set_driver(p=bob)
+    tesla.set_meeter(m=alice_and_father)
+    tesla.run()  # bob driver to find alice and her father
+
+    alice_do = Person(name="Alice", status="递给", place="Bob")
+    alice_do.alice_do1()
+
+    alice_do2 = Person(name="Alice", status="拿了", place="爸爸")
+    alice_do2.alice_do2()
+
+    alice_dad_do = Person(name="Alice's dad", status="吃了", place="苹果后")
+    alice_dad_do.alice_dad_do()
+    print("全剧终")
+
+
+if __name__ == "__main__":
+    application()
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  omg.txt
+-------------------------------------------------------------------------------------------
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  person.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+from venv1.bakery import Bakery
+from venv1.fruit_store import FruitStore
+
+
+class Person:
+    __name = None
+    __status = None
+    __place = None
+
+    # name的方法
+    def set_name(self, name: str):
+        self.__name = name
+
+    def get_name(self) -> str:
+        return self.__name
+
+    # status的方法
+    def set_status(self, status: str):
+        self.__status = status
+
+    def get_status(self) -> str:
+        return self.__status
+
+        # place的方法
+
+    def set_place(self, place: str):
+        self.__place = place
+
+    def get__place(self) -> str:
+        return self.__place
+
+    def __init__(self, name: str, status: str = None, place="hospital" or "fruit_store") -> None:
+        self.__name = name
+        self.__status = status
+        self.__place = place
+
+    def status(self):
+        print("{patient_name}现在{patient_status},住进了{patient_place}。".format(patient_name=self.__name,
+                                                                                 patient_status=self.__status,
+                                                                                 patient_place=self.__place), end="")
+
+    def alice_know(self):
+        print("{who}知道了消息之后，去{storename}买了".format(who=self.__name, storename=self.__place), end="")
+
+    def alice_do1(self):
+        print("{who}将两个篮子{alice_status}了{who_place}。".format(who=self.__name, alice_status=self.__status, who_place=self.__place))
+
+    def alice_do2(self):
+        print("{who}从苹果篮子{alice_do}一个苹果给{who_place}".format(who=self.__name, alice_do=self.__status, who_place=self.__place))
+
+    def alice_dad_do(self):
+        print("{who}{do}{place}".format(who=self.__name, do=self.__status, place=self.__place))
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  shop.py
+-------------------------------------------------------------------------------------------
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# 商店
+from venv1.building import Building
+
+
+class Shop(Building):
+    __brand = None  # 品牌
+    __f = None  # 楼层
+    __name = None  # 店名
+    __items = []  # 物品
+
+    def __init__(self, brand: str = None, f: int = None, name: str = None, item: str = None):
+        self.item = item
+        self.f = f
+        self.brand = brand
+        self.name = name
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+-------------------------------------------------------------------------------------------
+filename:  www.txt
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+filename:  bakery.py
+-------------------------------------------------------------------------------------------
+
+
+
